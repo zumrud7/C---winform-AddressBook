@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CompanyContactListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CompanyContactListEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Companies" EntityType="CompanyContactListModel.Company" />
+    <EntitySet Name="People" EntityType="CompanyContactListModel.Person" />
+    <AssociationSet Name="FK__EMPLOYEES__Compa__3A81B327" Association="CompanyContactListModel.FK__EMPLOYEES__Compa__3A81B327">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="People" Relationship="CompanyContactListModel.FK__EMPLOYEES__Compa__3A81B327" FromRole="Company" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="WorkNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="CompanyContactListModel.FK__EMPLOYEES__Compa__3A81B327" FromRole="Person" ToRole="Company" />
+  </EntityType>
+  <Association Name="FK__EMPLOYEES__Compa__3A81B327">
+    <End Type="CompanyContactListModel.Company" Role="Company" Multiplicity="0..1" />
+    <End Type="CompanyContactListModel.Person" Role="Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
